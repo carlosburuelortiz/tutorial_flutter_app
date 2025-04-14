@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:tutorial_app/bloc/user_bloc.dart';
+import 'package:tutorial_app/bloc/user/user_bloc.dart';
 import 'package:tutorial_app/repositories/user_repository.dart';
 
 final getIt = GetIt.instance;

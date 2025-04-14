@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tutorial_app/bloc/user_bloc.dart';
-import 'package:tutorial_app/bloc/user_state.dart';
+
+import 'package:tutorial_app/bloc/user/user_bloc.dart';
+import 'package:tutorial_app/bloc/user/user_state.dart';
 import 'package:tutorial_app/models/user.dart';
 
 class UserListScreen extends StatelessWidget {
@@ -13,12 +14,11 @@ class UserListScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Usuarios')),
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
-          switch (state) {
-            case UserLoading():
-              return Center(child: CircularProgressIndicator());
-            case UserLoaded(:final users):
-              {
-                return ListView.builder(
+          return state.when(
+            initial: () => Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
+            loaded:
+                (users) => ListView.builder(
                   itemCount: users.length,
                   itemBuilder: (_, index) {
                     User user = users[index];
@@ -27,13 +27,9 @@ class UserListScreen extends StatelessWidget {
                       subtitle: Text(user.email),
                     );
                   },
-                );
-              }
-            case UserError(:final message):
-              return Center(child: Text('Error: $message'));
-            default:
-              return Center(child: Text('Esperando datos...'));
-          }
+                ),
+            error: (message) => Center(child: Text('Error: $message')),
+          );
         },
       ),
     );

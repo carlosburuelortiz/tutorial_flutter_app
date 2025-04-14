@@ -8,7 +8,7 @@ class UserRepository {
   /// ! NOTE base url
   final String baseUrl = 'https://jsonplaceholder.typicode.com';
 
-  Future<List<User>> fetchUser() async {
+  Future<List<User>> fetchUsers() async {
     // ! NOTE path url
     final response = await http.get(Uri.parse('$baseUrl/users'));
 
